@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کانال عمو فلاح</title>
+    <style>
+        /* ریست و تنظیمات پایه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --font-size: 16px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            font-size: var(--font-size);
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeInPage 0.4s ease forwards;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* صفحه لوگین */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-box h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin: 10px 0;
+            padding: 12px;
+            background: #ffe6e6;
+            border-radius: 8px;
+            display: none;
+            border-right: 4px solid #e74c3c;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* دکمه‌ها */
+        .btn-primary,
+        .btn-secondary,
+        .btn-danger,
+        .btn-success,
+        .btn-warning,
+        .btn-info {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            width: auto;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            width: auto;
+            padding: 10px 18px;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            width: auto;
+            padding: 10px 18px;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+            width: auto;
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: #3498db;
+            color: white;
+            width: auto;
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+
+        .btn-info:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* نوار بالا */
+        .navbar {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .admin-nav .nav-content h2,
+        .admin-nav .nav-content span {
+            color: white;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-content h2 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* صفحه کاربران */
+        .content-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        .content-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .content-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .content-media {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .content-info {
+            padding: 25px;
+        }
+
+        .content-info h3 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .content-info p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .poem-content {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 35px;
+            border-radius: 20px;
+            border-right: 6px solid #667eea;
+        }
+
+        .poem-content h3 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 26px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .poem-text {
+            color: #333;
+            line-height: 2.8;
+            font-size: 19px;
+            white-space: pre-line;
+            text-align: center;
+            font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .music-player {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .music-player h3 {
+            color: #333;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .music-player audio {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .no-content {
+            text-align: center;
+            color: white;
+            font-size: 20px;
+            grid-column: 1 / -1;
+            padding: 80px 20px;
+        }
+
+        /* مودال زوم */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zoom-content {
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.4s ease;
+        }
+
+        .zoom-content img,
+        .zoom-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-zoom:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* پنل ادمین */
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .admin-sidebar {
+            width: 280px;
+            background: white;
+            padding: 30px 0;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-sidebar h3 {
+            padding: 0 25px;
+            margin-bottom: 25px;
+            color: #667eea;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .admin-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 16px 25px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-right: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .menu-item:hover {
+            background: #f8f9fa;
+            color: #667eea;
+            padding-right: 30px;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(90deg, #f0f2ff 0%, transparent 100%);
+            color: #667eea;
+            border-right-color: #667eea;
+            font-weight: 700;
+        }
+
+        .admin-main {
+            flex: 1;
+            padding: 40px;
+            background: #f5f6fa;
+            overflow-y: auto;
+        }
+
+        .admin-section {
+            display: none;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-section.active {
+            display: block;
+            animation: fadeInSection 0.4s ease;
+        }
+
+        @keyframes fadeInSection {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .admin-section h2 {
+            color: #333;
+            margin-bottom: 30px;
+            padding-bottom: 18px;
+            border-bottom: 3px solid #667eea;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* فرم آپلود */
+        .upload-form {
+            max-width: 700px;
+        }
+
+        .file-preview {
+            margin-top: 18px;
+            border: 3px dashed #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-preview:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .file-preview img,
+        .file-preview video,
+        .file-preview audio {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+        }
+
+        .preview-placeholder {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* لیست محتوا در پنل ادمین */
+        .content-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .content-card-media {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .content-card-body {
+            padding: 18px;
+        }
+
+        .content-card-body h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .content-card-body p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .poem-card {
+            background: linear-gradient(135deg, #f0f2ff 0%, #e6e9ff 100%);
+            border-color: #667eea;
+        }
+
+        .poem-card-body {
+            padding: 18px;
+        }
+
+        .poem-card-body h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .poem-card-body .poem-preview {
+            color: #555;
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: pre-line;
+        }
+
+        /* جدول کاربران */
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 18px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .users-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 700;
+        }
+
+        .users-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* تنظیمات سایت */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .settings-section {
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .settings-section:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .settings-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .color-picker-group input[type="color"] {
+            width: 70px;
+            height: 45px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* کنترل فونت */
+        .font-control {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .font-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .font-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* فوتر */
+        .site-footer {
+            background: white;
+            padding: 50px 20px;
+            margin-top: 80px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .footer-section p {
+            color: #666;
+            line-height: 2;
+            margin-bottom: 12px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-link {
+            display: block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #764ba2;
+            padding-right: 10px;
+        }
+
+        /* پشتیبانی */
+        .support-box {
+            background: linear-gradient(135deg, #f0f2ff 0%, #e6e9ff 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin-top: 40px;
+            border: 2px solid #667eea;
+        }
+
+        .support-box h3 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .messages-container {
+            max-height: 450px;
+            overflow-y: auto;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .message {
+            margin-bottom: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            animation: slideInMessage 0.3s ease;
+        }
+
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            margin-left: 60px;
+        }
+
+        .message.admin {
+            background: linear-gradient(135deg, #f0f2ff 0%, #e0e3ff 100%);
+            margin-right: 60px;
+        }
+
+        .message-header {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .message-text {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .support-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .support-form textarea {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            resize: vertical;
+            min-height: 70px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .support-form textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        .support-form button {
+            width: auto;
+            padding: 14px 30px;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1024px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-main {
+                padding: 20px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-content h2 {
+                font-size: 20px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .support-form {
+                flex-direction: column;
+            }
+
+            .close-zoom {
+                top: 15px;
+                right: 15px;
+                width: 50px;
+                height: 50px;
+                font-size: 35px;
+            }
+
+            .font-control {
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-list {
+                grid-template-columns: 1fr;
+            }
+
+            .users-table {
+                font-size: 13px;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 12px 8px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- کنترل سایز فونت -->
+    <div class="font-control">
+        <span style="color: #667eea; font-weight: 600;">سایز فونت:</span>
+        <button class="font-btn" onclick="decreaseFontSize()">-</button>
+        <button class="font-btn" onclick="increaseFontSize()">+</button>
+    </div>
+
+    <!-- مودال زوم -->
+    <div id="zoomModal" class="zoom-modal">
+        <span class="close-zoom">&times;</span>
+        <div class="zoom-content" id="zoomContent"></div>
+    </div>
+
+    <!-- صفحه لوگین -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-box">
+                <h1>ورود به کانال عمو فلاح</h1>
+                <p class="login-subtitle">خوش آمدید</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="firstName">نام:</label>
+                        <input type="text" id="firstName" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">نام خانوادگی:</label>
+                        <input type="text" id="lastName" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">شماره تلفن:</label>
+                        <input type="tel" id="phone" pattern="[0-9]{11}" placeholder="09123456789" required autocomplete="off">
+                    </div>
+                    <div id="adminCodeSection" class="form-group hidden">
+                        <label for="adminCode">کد امنیتی ادمین:</label>
+                        <input type="password" id="adminCode" autocomplete="new-password">
+                    </div>
+                    <div id="errorMessage" class="error-message"></div>
+                    <button type="submit" class="btn-primary">ورود</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه اصلی کاربران -->
+    <div id="userPage" class="page">
+        <nav class="navbar">
+            <div class="nav-content">
+                <h2 id="pageHeaderText">خوش آمدید <span id="userNameDisplay"></span></h2>
+                <div class="nav-buttons" id="userNavButtons"></div>
+            </div>
+        </nav>
+        
+        <div class="content-container">
+            <h1 class="page-title" id="pageTitleText">محتوای کانال</h1>
+            <div id="contentDisplay" class="content-grid">
+                <p class="no-content">هنوز محتوایی وجود ندارد</p>
+            </div>
+        </div>
+
+        <!-- فوتر -->
+        <footer class="site-footer" id="siteFooter">
+            <div class="footer-content" id="footerContent">
+                <!-- محتوای فوتر به صورت داینامیک اضافه می‌شود -->
+            </div>
+        </footer>
+
+        <!-- بخش پشتیبانی -->
+        <div class="content-container">
+            <div class="support-box">
+                <h3>تماس با پشتیبانی</h3>
+                <div class="messages-container" id="messagesContainer">
+                    <p style="text-align: center; color: #999;">هنوز پیامی ارسال نشده است</p>
+                </div>
+                <form class="support-form" id="supportForm">
+                    <textarea id="supportMessage" placeholder="پیام خود را بنویسید..." required></textarea>
+                    <button type="submit" class="btn-primary">ارسال</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- پنل ادمین -->
+    <div id="adminPage" class="page">
+        <nav class="navbar admin-nav">
+            <div class="nav-content">
+                <h2>پنل مدیریت - <span id="adminNameDisplay"></span></h2>
+                <div class="nav-buttons">
+                    <button id="viewSiteBtn" class="btn-info">دیدن سایت</button>
+                    <button id="adminLogoutBtn" class="btn-secondary hidden">خروج</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-container">
+            <div class="admin-sidebar">
+                <h3>مدیریت کامل</h3>
+                <ul class="admin-menu">
+                    <li><a href="#" class="menu-item active" data-section="upload">📷 افزودن محتوا</a></li>
+                    <li><a href="#" class="menu-item" data-section="poem">📝 افزودن شعر</a></li>
+                    <li><a href="#" class="menu-item" data-section="music">🎵 افزودن موزیک</a></li>
+                    <li><a href="#" class="menu-item" data-section="manage">📁 مدیریت محتواها</a></li>
+                    <li><a href="#" class="menu-item" data-section="settings">⚙️ تنظیمات سایت</a></li>
+                    <li><a href="#" class="menu-item" data-section="footer">🔗 تنظیمات فوتر</a></li>
+                    <li><a href="#" class="menu-item" data-section="advanced">🎨 تنظیمات پیشرفته</a></li>
+                    <li><a href="#" class="menu-item" data-section="support">💬 پشتیبانی کاربران</a></li>
+                    <li><a href="#" class="menu-item" data-section="users">👥 کاربران</a></li>
+                </ul>
+            </div>
+
+            <div class="admin-main">
+                <!-- بخش آپلود محتوا -->
+                <div id="uploadSection" class="admin-section active">
+                    <h2>افزودن محتوای جدید</h2>
+                    <form id="uploadForm" class="upload-form">
+                        <div class="form-group">
+                            <label>نوع محتوا:</label>
+                            <select id="contentType" required>
+                                <option value="">انتخاب کنید</option>
+                                <option value="image">تصویر</option>
+                                <option value="video">ویدیو</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fileInput">فایل:</label>
+                            <input type="file" id="fileInput" accept="image/*,video/*" required>
+                            <div id="filePreview" class="file-preview">
+                                <span class="preview-placeholder">فایل انتخاب نشده</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contentTitle">عنوان:</label>
+                            <input type="text" id="contentTitle" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contentDescription">توضیحات:</label>
+                            <textarea id="contentDescription" rows="4" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">ذخیره محتوا</button>
+                    </form>
+                </div>
+
+                <!-- بخش افزودن شعر -->
+                <div id="poemSection" class="admin-section">
+                    <h2>افزودن شعر جدید</h2>
+                    <form id="poemForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="poemTitle">عنوان شعر:</label>
+                            <input type="text" id="poemTitle" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="poemAuthor">شاعر:</label>
+                            <input type="text" id="poemAuthor" placeholder="اختیاری">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="poemText">متن شعر:</label>
+                            <textarea id="poemText" rows="10" placeholder="هر بیت را در یک خط بنویسید" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">ذخیره شعر</button>
+                    </form>
+                </div>
+
+                <!-- بخش افزودن موزیک -->
+                <div id="musicSection" class="admin-section">
+                    <h2>افزودن موزیک جدید</h2>
+                    <form id="musicForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="musicFile">فایل موزیک:</label>
+                            <input type="file" id="musicFile" accept="audio/*" required>
+                            <div id="musicPreview" class="file-preview">
+                                <span class="preview-placeholder">فایل انتخاب نشده</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="musicTitle">عنوان موزیک:</label>
+                            <input type="text" id="musicTitle" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="musicArtist">خواننده/سازنده:</label>
+                            <input type="text" id="musicArtist" placeholder="اختیاری">
+                        </div>
+
+                        <button type="submit" class="btn-primary">ذخیره موزیک</button>
+                    </form>
+                </div>
+
+                <!-- بخش مدیریت محتواها -->
+                <div id="manageSection" class="admin-section">
+                    <h2>مدیریت همه محتواها</h2>
+                    <div id="contentList" class="content-list">
+                        <p class="no-content">محتوایی برای مدیریت وجود ندارد</p>
+                    </div>
+                </div>
+
+                <!-- بخش تنظیمات سایت -->
+                <div id="settingsSection" class="admin-section">
+                    <h2>تنظیمات ظاهری سایت</h2>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-section">
+                            <h3>متن‌های سایت</h3>
+                            <div class="form-group">
+                                <label>متن هدر صفحه کاربران:</label>
+                                <input type="text" id="headerText" placeholder="خوش آمدید">
+                            </div>
+                            <div class="form-group">
+                                <label>عنوان صفحه اصلی:</label>
+                                <input type="text" id="titleText" placeholder="محتوای کانال">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>رنگ‌بندی سایت</h3>
+                            <div class="color-picker-group">
+                                <label>رنگ گرادیانت 1:</label>
+                                <input type="color" id="gradientColor1" value="#667eea">
+                                <span id="gradientColor1Value">#667eea</span>
+                            </div>
+                            <div class="color-picker-group">
+                                <label>رنگ گرادیانت 2:</label>
+                                <input type="color" id="gradientColor2" value="#764ba2">
+                                <span id="gradientColor2Value">#764ba2</span>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>چیدمان محتوا</h3>
+                            <div class="form-group">
+                                <label>تعداد ستون‌های نمایش:</label>
+                                <select id="gridColumns">
+                                    <option value="2">2 ستون</option>
+                                    <option value="3" selected>3 ستون</option>
+                                    <option value="4">4 ستون</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>ارتفاع تصاویر</h3>
+                            <div class="form-group">
+                                <label>ارتفاع تصاویر (پیکسل):</label>
+                                <input type="number" id="imageHeight" min="200" max="500" value="280" placeholder="280">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveSettings()">ذخیره تنظیمات</button>
+                </div>
+
+                <!-- بخش تنظیمات فوتر -->
+                <div id="footerSection" class="admin-section">
+                    <h2>مدیریت فوتر و لینک‌ها</h2>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-section">
+                            <h3>درباره ما</h3>
+                            <div class="form-group">
+                                <label>متن درباره:</label>
+                                <textarea id="footerAbout" rows="4" placeholder="متن درباره کانال یا سایت"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>اطلاعات تماس</h3>
+                            <div class="form-group">
+                                <label>شماره تلفن:</label>
+                                <input type="tel" id="footerPhone" placeholder="09123456789">
+                            </div>
+                            <div class="form-group">
+                                <label>ایمیل:</label>
+                                <input type="email" id="footerEmail" placeholder="info@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>آدرس:</label>
+                                <input type="text" id="footerAddress" placeholder="آدرس کامل">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>شبکه‌های اجتماعی</h3>
+                            <div class="form-group">
+                                <label>لینک ایتا:</label>
+                                <input type="url" id="socialEita" placeholder="https://eitaa.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>لینک تلگرام:</label>
+                                <input type="url" id="socialTelegram" placeholder="https://t.me/...">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>شبکه‌های اجتماعی (ادامه)</h3>
+                            <div class="form-group">
+                                <label>لینک اینستاگرام:</label>
+                                <input type="url" id="socialInstagram" placeholder="https://instagram.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>لینک واتساپ:</label>
+                                <input type="url" id="socialWhatsapp" placeholder="https://wa.me/...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveFooterSettings()">ذخیره تنظیمات فوتر</button>
+                </div>
+
+                <!-- بخش تنظیمات پیشرفته -->
+                <div id="advancedSection" class="admin-section">
+                    <h2>تنظیمات پیشرفته</h2>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-section">
+                            <h3>انیمیشن‌ها</h3>
+                            <div class="form-group">
+                                <label>سرعت انیمیشن:</label>
+                                <select id="animationSpeed">
+                                    <option value="slow">آرام</option>
+                                    <option value="normal" selected>عادی</option>
+                                    <option value="fast">سریع</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>فاصله‌گذاری</h3>
+                            <div class="form-group">
+                                <label>فاصله بین المان‌ها:</label>
+                                <input type="number" id="spacing" min="10" max="60" value="35" placeholder="35">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>شعاع گرد کردن گوشه‌ها</h3>
+                            <div class="form-group">
+                                <label>شعاع (پیکسل):</label>
+                                <input type="number" id="borderRadius" min="5" max="30" value="20" placeholder="20">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>سایه‌ها</h3>
+                            <div class="form-group">
+                                <label>شدت سایه:</label>
+                                <select id="shadowIntensity">
+                                    <option value="light">کم</option>
+                                    <option value="medium" selected>متوسط</option>
+                                    <option value="strong">زیاد</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="saveAdvancedSettings()">ذخیره تنظیمات پیشرفته</button>
+                </div>
+
+                <!-- بخش پشتیبانی -->
+                <div id="supportSection" class="admin-section">
+                    <h2>مدیریت پیام‌های پشتیبانی</h2>
+                    <div id="adminMessagesContainer" class="messages-container">
+                        <p style="text-align: center; color: #999;">پیامی وجود ندارد</p>
+                    </div>
+                </div>
+
+                <!-- بخش کاربران -->
+                <div id="usersSection" class="admin-section">
+                    <h2>لیست کاربران</h2>
+                    <div id="usersList" class="users-list">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نام خانوادگی</th>
+                                    <th>شماره تلفن</th>
+                                    <th>تاریخ ثبت نام</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="4" class="no-content">کاربری ثبت نشده است</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تنظیمات امنیتی ادمین
+        const ADMIN_CONFIG = {
+            name: 'حسن',
+            lastname: 'فلاح',
+            phone: '09188197097',
+            code: 'ABC1213149087HAS'
+        };
+
+        // کاربر دیگر که فقط می‌تواند خارج شود
+        const SPECIAL_USER = {
+            name: 'امیر حسین',
+            lastname: 'نادری'
+        };
+
+        // دریافت عناصر DOM
+        const pages = {
+            login: document.getElementById('loginPage'),
+            user: document.getElementById('userPage'),
+            admin: document.getElementById('adminPage')
+        };
+
+        const loginForm = document.getElementById('loginForm');
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const phoneInput = document.getElementById('phone');
+        const adminCodeSection = document.getElementById('adminCodeSection');
+        const adminCodeInput = document.getElementById('adminCode');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // مودال زوم
+        const zoomModal = document.getElementById('zoomModal');
+        const zoomContent = document.getElementById('zoomContent');
+        const closeZoom = document.querySelector('.close-zoom');
+
+        closeZoom.onclick = () => {
+            zoomModal.classList.remove('active');
+            zoomContent.innerHTML = '';
+        };
+
+        window.onclick = (e) => {
+            if (e.target === zoomModal) {
+                zoomModal.classList.remove('active');
+                zoomContent.innerHTML = '';
+            }
+        };
+
+        function openZoom(element, type) {
+            if (type === 'image') {
+                zoomContent.innerHTML = `<img src="${element.src}" alt="zoom">`;
+            } else if (type === 'video') {
+                zoomContent.innerHTML = `<video src="${element.src}" controls autoplay></video>`;
+            }
+            zoomModal.classList.add('active');
+        }
+
+        // کنترل فونت
+        function increaseFontSize() {
+            const currentSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--font-size'));
+            if (currentSize < 22) {
+                document.documentElement.style.setProperty('--font-size', (currentSize + 2) + 'px');
+                localStorage.setItem('fontSize', currentSize + 2);
+            }
+        }
+
+        function decreaseFontSize() {
+            const currentSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--font-size'));
+            if (currentSize > 12) {
+                document.documentElement.style.setProperty('--font-size', (currentSize - 2) + 'px');
+                localStorage.setItem('fontSize', currentSize - 2);
+            }
+        }
+
+        // بررسی کاربر ذخیره شده
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            loadAdvancedSettings();
+            
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize) {
+                document.documentElement.style.setProperty('--font-size', savedFontSize + 'px');
+            }
+
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                if (user.isAdmin) {
+                    showAdminPanel(user);
+                } else {
+                    showUserPage(user);
+                }
+            }
+        });
+
+        // مدیریت فرم لوگین
+        let loginAttempts = 0;
+        const MAX_ATTEMPTS = 5;
+
+        firstNameInput.addEventListener('input', checkAdminOrSpecialUser);
+        lastNameInput.addEventListener('input', checkAdminOrSpecialUser);
+
+        function checkAdminOrSpecialUser() {
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            
+            if (firstName === ADMIN_CONFIG.name && lastName === ADMIN_CONFIG.lastname) {
+                adminCodeSection.classList.remove('hidden');
+                adminCodeInput.required = true;
+            } else {
+                adminCodeSection.classList.add('hidden');
+                adminCodeInput.required = false;
+                adminCodeInput.value = '';
+            }
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (loginAttempts >= MAX_ATTEMPTS) {
+                showError('تعداد تلاش‌های شما به حد مجاز رسیده است. لطفا بعدا تلاش کنید.');
+                setTimeout(() => { loginAttempts = 0; }, 300000);
+                return;
+            }
+            
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            
+            if (!/^09[0-9]{9}$/.test(phone)) {
+                showError('شماره تلفن باید با 09 شروع شده و 11 رقم باشد');
+                return;
+            }
+            
+            // بررسی ادمین با مشخصات کامل
+            if (firstName === ADMIN_CONFIG.name && 
+                lastName === ADMIN_CONFIG.lastname && 
+                phone === ADMIN_CONFIG.phone) {
+                
+                const code = adminCodeInput.value;
+                
+                if (code !== ADMIN_CONFIG.code) {
+                    loginAttempts++;
+                    showError(`کد امنیتی اشتباه است. (تلاش ${loginAttempts}/${MAX_ATTEMPTS})`);
+                    adminCodeInput.value = '';
+                    return;
+                }
+                
+                loginAttempts = 0;
+                const adminUser = {
+                    firstName,
+                    lastName,
+                    phone,
+                    isAdmin: true,
+                    loginDate: new Date().toISOString()
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                saveUserToList(adminUser);
+                showAdminPanel(adminUser);
+            }
+            // بررسی کاربر امیر حسین نادری
+            else if (firstName === SPECIAL_USER.name && lastName === SPECIAL_USER.lastname) {
+                const specialUser = {
+                    firstName,
+                    lastName,
+                    phone,
+                    isAdmin: false,
+                    isSpecial: true,
+                    loginDate: new Date().toISOString()
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(specialUser));
+                saveUserToList(specialUser);
+                showUserPage(specialUser);
+            }
+            // کاربر عادی
+            else {
+                const normalUser = {
+                    firstName,
+                    lastName,
+                    phone,
+                    isAdmin: false,
+                    isSpecial: false,
+                    loginDate: new Date().toISOString()
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(normalUser));
+                saveUserToList(normalUser);
+                showUserPage(normalUser);
+            }
+            
+            loginForm.reset();
+            adminCodeSection.classList.add('hidden');
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        function saveUserToList(user) {
+            let users = JSON.parse(localStorage.getItem('usersList') || '[]');
+            const exists = users.some(u => u.phone === user.phone);
+            if (!exists) {
+                users.push(user);
+                localStorage.setItem('usersList', JSON.stringify(users));
+            }
+        }
+
+        function showUserPage(user) {
+            pages.login.classList.remove('active');
+            pages.admin.classList.remove('active');
+            
+            setTimeout(() => {
+                pages.user.classList.add('active');
+            }, 100);
+            
+            document.getElementById('userNameDisplay').textContent = `${user.firstName} ${user.lastName}`;
+            
+            // نمایش دکمه خروج برای امیر حسین نادری
+            const userNavButtons = document.getElementById('userNavButtons');
+            if (user.isSpecial) {
+                userNavButtons.innerHTML = '<button id="userLogoutBtn" class="btn-secondary">خروج</button>';
+                document.getElementById('userLogoutBtn').addEventListener('click', handleUserLogout);
+            } else {
+                userNavButtons.innerHTML = '';
+            }
+            
+            displayContent();
+            displayFooter();
+            loadUserMessages();
+        }
+
+        function showAdminPanel(user) {
+            pages.login.classList.remove('active');
+            pages.user.classList.remove('active');
+            
+            setTimeout(() => {
+                pages.admin.classList.add('active');
+            }, 100);
+            
+            document.getElementById('adminNameDisplay').textContent = `${user.firstName} ${user.lastName}`;
+            
+            // ادمین دکمه خروج ندارد
+            document.getElementById('adminLogoutBtn').classList.add('hidden');
+            
+            displayContentInAdmin();
+            displayUsers();
+            loadAdminMessages();
+            loadSettingsToForm();
+            loadFooterSettingsToForm();
+            loadAdvancedSettingsToForm();
+        }
+
+        // خروج از سیستم فقط برای امیر حسین
+        function handleUserLogout() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+                localStorage.removeItem('currentUser');
+                pages.user.classList.remove('active');
+                setTimeout(() => {
+                    pages.login.classList.add('active');
+                }, 100);
+            }
+        }
+
+        // دیدن سایت توسط ادمین
+        document.getElementById('viewSiteBtn').addEventListener('click', () => {
+            const adminUser = JSON.parse(localStorage.getItem('currentUser'));
+            pages.admin.classList.remove('active');
+            setTimeout(() => {
+                pages.user.classList.add('active');
+                document.getElementById('userNameDisplay').textContent = `${adminUser.firstName} ${adminUser.lastName}`;
+                
+                const userNavButtons = document.getElementById('userNavButtons');
+                userNavButtons.innerHTML = '<button id="backToAdminBtn" class="btn-info">بازگشت به پنل</button>';
+                document.getElementById('backToAdminBtn').addEventListener('click', () => {
+                    pages.user.classList.remove('active');
+                    setTimeout(() => {
+                        pages.admin.classList.add('active');
+                    }, 100);
+                });
+                
+                displayContent();
+                displayFooter();
+                loadUserMessages();
+            }, 100);
+        });
+
+        // منوی ادمین
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                
+                item.classList.add('active');
+                const section = item.dataset.section;
+                
+                setTimeout(() => {
+                    document.getElementById(`${section}Section`).classList.add('active');
+                }, 50);
+                
+                if (section === 'manage') {
+                    displayContentInAdmin();
+                } else if (section === 'users') {
+                    displayUsers();
+                } else if (section === 'support') {
+                    loadAdminMessages();
+                }
+            });
+        });
+
+        // آپلود محتوا
+        const contentTypeSelect = document.getElementById('contentType');
+        const fileInput = document.getElementById('fileInput');
+
+        contentTypeSelect.addEventListener('change', () => {
+            const type = contentTypeSelect.value;
+            if (type === 'image') {
+                fileInput.accept = 'image/*';
+            } else if (type === 'video') {
+                fileInput.accept = 'video/*';
+            }
+            fileInput.value = '';
+            document.getElementById('filePreview').innerHTML = '<span class="preview-placeholder">فایل انتخاب نشده</span>';
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const preview = document.getElementById('filePreview');
+            const reader = new FileReader();
+            
+            reader.onload = (event) => {
+                const type = contentTypeSelect.value;
+                if (type === 'image') {
+                    preview.innerHTML = `<img src="${event.target.result}" alt="پیش‌نمایش">`;
+                } else if (type === 'video') {
+                    preview.innerHTML = `<video src="${event.target.result}" controls></video>`;
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        });
+
+        const uploadForm = document.getElementById('uploadForm');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('لطفا فایل را انتخاب کنید');
+                return;
+            }
+            
+            const type = contentTypeSelect.value;
+            const title = document.getElementById('contentTitle').value.trim();
+            const description = document.getElementById('contentDescription').value.trim();
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const content = {
+                    id: Date.now(),
+                    type,
+                    fileData: event.target.result,
+                    title,
+                    description,
+                    uploadDate: new Date().toISOString()
+                };
+                
+                saveContent(content);
+                uploadForm.reset();
+                document.getElementById('filePreview').innerHTML = '<span class="preview-placeholder">فایل انتخاب نشده</span>';
+                
+                alert('محتوا با موفقیت ذخیره شد');
+                displayContentInAdmin();
+            };
+            
+            reader.readAsDataURL(file);
+        });
+
+        // آپلود شعر
+        const poemForm = document.getElementById('poemForm');
+        poemForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('poemTitle').value.trim();
+            const author = document.getElementById('poemAuthor').value.trim();
+            const text = document.getElementById('poemText').value.trim();
+            
+            const poem = {
+                id: Date.now(),
+                type: 'poem',
+                title,
+                author,
+                text,
+                uploadDate: new Date().toISOString()
+            };
+            
+            saveContent(poem);
+            poemForm.reset();
+            alert('شعر با موفقیت ذخیره شد');
+            displayContentInAdmin();
+        });
+
+        // آپلود موزیک
+        const musicFile = document.getElementById('musicFile');
+        musicFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const preview = document.getElementById('musicPreview');
+            const reader = new FileReader();
+            
+            reader.onload = (event) => {
+                preview.innerHTML = `<audio src="${event.target.result}" controls></audio>`;
+            };
+            
+            reader.readAsDataURL(file);
+        });
+
+        const musicForm = document.getElementById('musicForm');
+        musicForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const file = musicFile.files[0];
+            if (!file) {
+                alert('لطفا فایل موزیک را انتخاب کنید');
+                return;
+            }
+            
+            const title = document.getElementById('musicTitle').value.trim();
+            const artist = document.getElementById('musicArtist').value.trim();
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const music = {
+                    id: Date.now(),
+                    type: 'music',
+                    fileData: event.target.result,
+                    title,
+                    artist,
+                    uploadDate: new Date().toISOString()
+                };
+                
+                saveContent(music);
+                musicForm.reset();
+                document.getElementById('musicPreview').innerHTML = '<span class="preview-placeholder">فایل انتخاب نشده</span>';
+                
+                alert('موزیک با موفقیت ذخیره شد');
+                displayContentInAdmin();
+            };
+            
+            reader.readAsDataURL(file);
+        });
+
+        function saveContent(content) {
+            let contents = JSON.parse(localStorage.getItem('contents') || '[]');
+            contents.push(content);
+            localStorage.setItem('contents', JSON.stringify(contents));
+        }
+
+        function getContents() {
+            return JSON.parse(localStorage.getItem('contents') || '[]');
+        }
+
+        function deleteContent(id) {
+            if (!confirm('آیا مطمئن هستید که می‌خواهید این محتوا را حذف کنید؟')) {
+                return;
+            }
+            
+            let contents = getContents();
+            contents = contents.filter(c => c.id !== id);
+            localStorage.setItem('contents', JSON.stringify(contents));
+            displayContentInAdmin();
+            displayContent();
+        }
+
+        function editContent(id) {
+            const contents = getContents();
+            const content = contents.find(c => c.id === id);
+            if (!content) return;
+            
+            if (content.type === 'poem') {
+                document.getElementById('poemTitle').value = content.title;
+                document.getElementById('poemAuthor').value = content.author || '';
+                document.getElementById('poemText').value = content.text;
+                
+                deleteContent(id);
+                
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                document.querySelector('[data-section="poem"]').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('poemSection').classList.add('active');
+                }, 50);
+            } else if (content.type === 'music') {
+                document.getElementById('musicTitle').value = content.title;
+                document.getElementById('musicArtist').value = content.artist || '';
+                
+                deleteContent(id);
+                
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                document.querySelector('[data-section="music"]').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('musicSection').classList.add('active');
+                }, 50);
+            } else {
+                document.getElementById('contentType').value = content.type;
+                document.getElementById('contentTitle').value = content.title;
+                document.getElementById('contentDescription').value = content.description;
+                
+                deleteContent(id);
+                
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                document.querySelector('[data-section="upload"]').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('uploadSection').classList.add('active');
+                }, 50);
+            }
+            
+            alert('محتوا برای ویرایش آماده شد. لطفا تغییرات را اعمال کرده و ذخیره کنید.');
+        }
+
+        // نمایش محتوا برای کاربران
+        function displayContent() {
+            const contents = getContents();
+            const container = document.getElementById('contentDisplay');
+            
+            if (contents.length === 0) {
+                container.innerHTML = '<p class="no-content">هنوز محتوایی وجود ندارد</p>';
+                return;
+            }
+            
+            container.innerHTML = contents.map(content => {
+                if (content.type === 'poem') {
+                    return `
+                        <div class="content-item poem-content">
+                            <h3>${content.title}</h3>
+                            ${content.author ? `<p style="text-align: center; color: #667eea; margin-bottom: 15px; font-weight: 600;">شاعر: ${content.author}</p>` : ''}
+                            <p class="poem-text">${content.text}</p>
+                        </div>
+                    `;
+                } else if (content.type === 'music') {
+                    return `
+                        <div class="content-item music-player">
+                            <h3>${content.title}</h3>
+                            ${content.artist ? `<p style="color: #666; margin-bottom: 10px; font-weight: 500;">${content.artist}</p>` : ''}
+                            <audio src="${content.fileData}" controls></audio>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="content-item" onclick="openZoom(this.querySelector('.content-media'), '${content.type}')">
+                            ${content.type === 'image' 
+                                ? `<img src="${content.fileData}" alt="${content.title}" class="content-media">`
+                                : `<video src="${content.fileData}" class="content-media"></video>`
+                            }
+                            <div class="content-info">
+                                <h3>${content.title}</h3>
+                                <p>${content.description}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // نمایش محتوا در پنل ادمین
+        function displayContentInAdmin() {
+            const contents = getContents();
+            const container = document.getElementById('contentList');
+            
+            if (contents.length === 0) {
+                container.innerHTML = '<p class="no-content">محتوایی برای مدیریت وجود ندارد</p>';
+                return;
+            }
+            
+            container.innerHTML = contents.map(content => {
+                if (content.type === 'poem') {
+                    return `
+                        <div class="content-card poem-card">
+                            <div class="poem-card-body">
+                                <h4>${content.title}</h4>
+                                ${content.author ? `<p style="color: #667eea; font-size: 13px; margin-bottom: 8px; font-weight: 600;">شاعر: ${content.author}</p>` : ''}
+                                <p class="poem-preview">${content.text}</p>
+                                <button class="btn-warning" onclick="editContent(${content.id})">ویرایش</button>
+                                <button class="btn-danger" onclick="deleteContent(${content.id})">حذف</button>
+                            </div>
+                        </div>
+                    `;
+                } else if (content.type === 'music') {
+                    return `
+                        <div class="content-card">
+                            <div class="content-card-body">
+                                <h4>🎵 ${content.title}</h4>
+                                ${content.artist ? `<p style="color: #666; font-size: 13px; font-weight: 500;">${content.artist}</p>` : ''}
+                                <audio src="${content.fileData}" controls style="width: 100%; margin: 12px 0;"></audio>
+                                <button class="btn-warning" onclick="editContent(${content.id})">ویرایش</button>
+                                <button class="btn-danger" onclick="deleteContent(${content.id})">حذف</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="content-card">
+                            ${content.type === 'image' 
+                                ? `<img src="${content.fileData}" alt="${content.title}" class="content-card-media">`
+                                : `<video src="${content.fileData}" class="content-card-media"></video>`
+                            }
+                            <div class="content-card-body">
+                                <h4>${content.title}</h4>
+                                <p>${content.description}</p>
+                                <button class="btn-warning" onclick="editContent(${content.id})">ویرایش</button>
+                                <button class="btn-danger" onclick="deleteContent(${content.id})">حذف</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // نمایش کاربران
+        function displayUsers() {
+            const users = JSON.parse(localStorage.getItem('usersList') || '[]');
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="no-content">کاربری ثبت نشده است</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.phone}</td>
+                    <td>${new Date(user.loginDate).toLocaleDateString('fa-IR')}</td>
+                </tr>
+            `).join('');
+        }
+
+        // تنظیمات سایت
+        function saveSettings() {
+            const settings = {
+                headerText: document.getElementById('headerText').value || 'خوش آمدید',
+                titleText: document.getElementById('titleText').value || 'محتوای کانال',
+                gradientColor1: document.getElementById('gradientColor1').value,
+                gradientColor2: document.getElementById('gradientColor2').value,
+                gridColumns: document.getElementById('gridColumns').value,
+                imageHeight: document.getElementById('imageHeight').value || '280'
+            };
+            
+            localStorage.setItem('siteSettings', JSON.stringify(settings));
+            applySettings(settings);
+            alert('تنظیمات با موفقیت ذخیره شد');
+        }
+
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('siteSettings') || 'null');
+            if (settings) {
+                applySettings(settings);
+            }
+        }
+
+        function loadSettingsToForm() {
+            const settings = JSON.parse(localStorage.getItem('siteSettings') || 'null');
+            if (settings) {
+                document.getElementById('headerText').value = settings.headerText || '';
+                document.getElementById('titleText').value = settings.titleText || '';
+                document.getElementById('gradientColor1').value = settings.gradientColor1 || '#667eea';
+                document.getElementById('gradientColor2').value = settings.gradientColor2 || '#764ba2';
+                document.getElementById('gridColumns').value = settings.gridColumns || '3';
+                document.getElementById('imageHeight').value = settings.imageHeight || '280';
+                
+                document.getElementById('gradientColor1Value').textContent = settings.gradientColor1 || '#667eea';
+                document.getElementById('gradientColor2Value').textContent = settings.gradientColor2 || '#764ba2';
+            }
+        }
+
+        function applySettings(settings) {
+            const headerText = settings.headerText || 'خوش آمدید';
+            const titleText = settings.titleText || 'محتوای کانال';
+            
+            const pageHeaderElement = document.getElementById('pageHeaderText');
+            if (pageHeaderElement) {
+                const userName = document.getElementById('userNameDisplay').textContent;
+                pageHeaderElement.innerHTML = `${headerText} <span id="userNameDisplay">${userName}</span>`;
+            }
+            
+            const pageTitleElement = document.getElementById('pageTitleText');
+            if (pageTitleElement) {
+                pageTitleElement.textContent = titleText;
+            }
+            
+            const gradient = `linear-gradient(135deg, ${settings.gradientColor1} 0%, ${settings.gradientColor2} 100%)`;
+            document.body.style.background = gradient;
+            
+            const gridColumns = settings.gridColumns || '3';
+            const imageHeight = settings.imageHeight || '280';
+            
+            const style = document.createElement('style');
+            style.id = 'dynamic-settings-style';
+            const existingStyle = document.getElementById('dynamic-settings-style');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+            
+            style.textContent = `
+                .content-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(${gridColumns === '2' ? '400px' : gridColumns === '4' ? '250px' : '320px'}, 1fr)) !important;
+                }
+                .content-media {
+                    height: ${imageHeight}px !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // تنظیمات رنگ
+        document.getElementById('gradientColor1').addEventListener('input', (e) => {
+            document.getElementById('gradientColor1Value').textContent = e.target.value;
+        });
+
+        document.getElementById('gradientColor2').addEventListener('input', (e) => {
+            document.getElementById('gradientColor2Value').textContent = e.target.value;
+        });
+
+        // تنظیمات پیشرفته
+        function saveAdvancedSettings() {
+            const advancedSettings = {
+                animationSpeed: document.getElementById('animationSpeed').value,
+                spacing: document.getElementById('spacing').value || '35',
+                borderRadius: document.getElementById('borderRadius').value || '20',
+                shadowIntensity: document.getElementById('shadowIntensity').value
+            };
+            
+            localStorage.setItem('advancedSettings', JSON.stringify(advancedSettings));
+            applyAdvancedSettings(advancedSettings);
+            alert('تنظیمات پیشرفته با موفقیت ذخیره شد');
+        }
+
+        function loadAdvancedSettings() {
+            const settings = JSON.parse(localStorage.getItem('advancedSettings') || 'null');
+            if (settings) {
+                applyAdvancedSettings(settings);
+            }
+        }
+
+        function loadAdvancedSettingsToForm() {
+            const settings = JSON.parse(localStorage.getItem('advancedSettings') || 'null');
+            if (settings) {
+                document.getElementById('animationSpeed').value = settings.animationSpeed || 'normal';
+                document.getElementById('spacing').value = settings.spacing || '35';
+                document.getElementById('borderRadius').value = settings.borderRadius || '20';
+                document.getElementById('shadowIntensity').value = settings.shadowIntensity || 'medium';
+            }
+        }
+
+        function applyAdvancedSettings(settings) {
+            const animDuration = settings.animationSpeed === 'slow' ? '0.6s' : 
+                                settings.animationSpeed === 'fast' ? '0.2s' : '0.4s';
+            
+            const spacing = settings.spacing || '35';
+            const borderRadius = settings.borderRadius || '20';
+            
+            let shadowValue;
+            if (settings.shadowIntensity === 'light') {
+                shadowValue = '0 5px 15px rgba(0, 0, 0, 0.08)';
+            } else if (settings.shadowIntensity === 'strong') {
+                shadowValue = '0 15px 40px rgba(0, 0, 0, 0.25)';
+            } else {
+                shadowValue = '0 10px 30px rgba(0, 0, 0, 0.15)';
+            }
+            
+            const style = document.createElement('style');
+            style.id = 'dynamic-advanced-style';
+            const existingStyle = document.getElementById('dynamic-advanced-style');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+            
+            style.textContent = `
+                .page.active {
+                    animation-duration: ${animDuration} !important;
+                }
+                .content-grid {
+                    gap: ${spacing}px !important;
+                }
+                .content-item,
+                .login-box,
+                .admin-section,
+                .settings-section {
+                    border-radius: ${borderRadius}px !important;
+                }
+                .content-item {
+                    box-shadow: ${shadowValue} !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // تنظیمات فوتر
+        function saveFooterSettings() {
+            const footerSettings = {
+                about: document.getElementById('footerAbout').value,
+                phone: document.getElementById('footerPhone').value,
+                email: document.getElementById('footerEmail').value,
+                address: document.getElementById('footerAddress').value,
+                socialEita: document.getElementById('socialEita').value,
+                socialTelegram: document.getElementById('socialTelegram').value,
+                socialInstagram: document.getElementById('socialInstagram').value,
+                socialWhatsapp: document.getElementById('socialWhatsapp').value
+            };
+            
+            localStorage.setItem('footerSettings', JSON.stringify(footerSettings));
+            displayFooter();
+            alert('تنظیمات فوتر با موفقیت ذخیره شد');
+        }
+
+        function loadFooterSettingsToForm() {
+            const settings = JSON.parse(localStorage.getItem('footerSettings') || 'null');
+            if (settings) {
+                document.getElementById('footerAbout').value = settings.about || '';
+                document.getElementById('footerPhone').value = settings.phone || '';
+                document.getElementById('footerEmail').value = settings.email || '';
+                document.getElementById('footerAddress').value = settings.address || '';
+                document.getElementById('socialEita').value = settings.socialEita || '';
+                document.getElementById('socialTelegram').value = settings.socialTelegram || '';
+                document.getElementById('socialInstagram').value = settings.socialInstagram || '';
+                document.getElementById('socialWhatsapp').value = settings.socialWhatsapp || '';
+            }
+        }
+
+        function displayFooter() {
+            const settings = JSON.parse(localStorage.getItem('footerSettings') || 'null');
+            const container = document.getElementById('footerContent');
+            
+            if (!settings || (!settings.about && !settings.phone && !settings.email && !settings.address && 
+                !settings.socialEita && !settings.socialTelegram && !settings.socialInstagram && !settings.socialWhatsapp)) {
+                container.innerHTML = `
+                    <div class="footer-section">
+                        <h3>کانال عمو فلاح</h3>
+                        <p>محتوای ارزشمند و آموزنده</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            if (settings.about) {
+                html += `
+                    <div class="footer-section">
+                        <h3>درباره ما</h3>
+                        <p>${settings.about}</p>
+                    </div>
+                `;
+            }
+            
+            if (settings.phone || settings.email || settings.address) {
+                html += `
+                    <div class="footer-section">
+                        <h3>تماس با ما</h3>
+                        ${settings.phone ? `<p>📞 <a href="tel:${settings.phone}" class="contact-link">${settings.phone}</a></p>` : ''}
+                        ${settings.email ? `<p>📧 <a href="mailto:${settings.email}" class="contact-link">${settings.email}</a></p>` : ''}
+                        ${settings.address ? `<p>📍 ${settings.address}</p>` : ''}
+                    </div>
+                `;
+            }
+            
+            const socials = [];
+            if (settings.socialEita) socials.push(`<a href="${settings.socialEita}" class="social-link" target="_blank">ایتا</a>`);
+            if (settings.socialTelegram) socials.push(`<a href="${settings.socialTelegram}" class="social-link" target="_blank">تلگرام</a>`);
+            if (settings.socialInstagram) socials.push(`<a href="${settings.socialInstagram}" class="social-link" target="_blank">اینستاگرام</a>`);
+            if (settings.socialWhatsapp) socials.push(`<a href="${settings.socialWhatsapp}" class="social-link" target="_blank">واتساپ</a>`);
+            
+            if (socials.length > 0) {
+                html += `
+                    <div class="footer-section">
+                        <h3>شبکه‌های اجتماعی</h3>
+                        <div class="social-links">
+                            ${socials.join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // پشتیبانی
+        const supportForm = document.getElementById('supportForm');
+        supportForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const messageText = document.getElementById('supportMessage').value.trim();
+            if (!messageText) return;
+            
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const message = {
+                id: Date.now(),
+                userId: user.phone,
+                userName: `${user.firstName} ${user.lastName}`,
+                text: messageText,
+                isAdmin: false,
+                timestamp: new Date().toISOString()
+            };
+            
+            let messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            messages.push(message);
+            localStorage.setItem('supportMessages', JSON.stringify(messages));
+            
+            document.getElementById('supportMessage').value = '';
+            loadUserMessages();
+            alert('پیام شما ارسال شد');
+        });
+
+        function loadUserMessages() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const userMessages = messages.filter(m => m.userId === user.phone);
+            
+            const container = document.getElementById('messagesContainer');
+            
+            if (userMessages.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999;">هنوز پیامی ارسال نشده است</p>';
+                return;
+            }
+            
+            container.innerHTML = userMessages.map(msg => `
+                <div class="message ${msg.isAdmin ? 'admin' : 'user'}">
+                    <div class="message-header">${msg.isAdmin ? 'پشتیبانی' : 'شما'}</div>
+                    <div class="message-text">${msg.text}</div>
+                    <div class="message-time">${new Date(msg.timestamp).toLocaleString('fa-IR')}</div>
+                </div>
+            `).join('');
+            
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function loadAdminMessages() {
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const container = document.getElementById('adminMessagesContainer');
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999;">پیامی وجود ندارد</p>';
+                return;
+            }
+            
+            const groupedMessages = {};
+            messages.forEach(msg => {
+                if (!groupedMessages[msg.userId]) {
+                    groupedMessages[msg.userId] = [];
+                }
+                groupedMessages[msg.userId].push(msg);
+            });
+            
+            let html = '';
+            Object.keys(groupedMessages).forEach(userId => {
+                const userMsgs = groupedMessages[userId];
+                const userName = userMsgs[0].userName;
+                
+                html += `
+                    <div style="margin-bottom: 30px; padding: 25px; background: #f8f9fa; border-radius: 15px; border: 2px solid #e0e0e0;">
+                        <h4 style="color: #667eea; margin-bottom: 20px; font-weight: 700;">گفتگو با ${userName} (${userId})</h4>
+                        ${userMsgs.map(msg => `
+                            <div class="message ${msg.isAdmin ? 'admin' : 'user'}">
+                                <div class="message-header">${msg.isAdmin ? 'شما (ادمین)' : userName}</div>
+                                <div class="message-text">${msg.text}</div>
+                                <div class="message-time">${new Date(msg.timestamp).toLocaleString('fa-IR')}</div>
+                            </div>
+                        `).join('')}
+                        <form onsubmit="replyToUser(event, '${userId}', '${userName}')" style="margin-top: 20px; display: flex; gap: 12px;">
+                            <textarea placeholder="پاسخ شما..." required style="flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; resize: vertical; min-height: 70px; font-family: inherit;"></textarea>
+                            <button type="submit" class="btn-primary" style="width: auto; padding: 12px 25px;">ارسال پاسخ</button>
+                        </form>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function replyToUser(event, userId, userName) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const textarea = form.querySelector('textarea');
+            const messageText = textarea.value.trim();
+            
+            if (!messageText) return;
+            
+            const message = {
+                id: Date.now(),
+                userId: userId,
+                userName: userName,
+                text: messageText,
+                isAdmin: true,
+                timestamp: new Date().toISOString()
+            };
+            
+            let messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            messages.push(message);
+            localStorage.setItem('supportMessages', JSON.stringify(messages));
+            
+            textarea.value = '';
+            loadAdminMessages();
+            alert('پاسخ شما ارسال شد');
+        }
+
+        // توابع جهانی
+        window.deleteContent = deleteContent;
+        window.editContent = editContent;
+        window.saveSettings = saveSettings;
+        window.saveFooterSettings = saveFooterSettings;
+        window.saveAdvancedSettings = saveAdvancedSettings;
+        window.replyToUser = replyToUser;
+        window.openZoom = openZoom;
+        window.increaseFontSize = increaseFontSize;
+        window.decreaseFontSize = decreaseFontSize;
+    </script>
+</body>
+</html>
